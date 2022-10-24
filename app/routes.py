@@ -1,3 +1,4 @@
+from crypt import methods
 from flask import Blueprint, jsonify, abort, make_response
 
 class Planet:
@@ -43,7 +44,7 @@ def validate_planet(planet_id):
     
     abort(make_response({"message":f"planet {planet_id} not found"}, 404))
 
-@planets_bp.route("/<planet_id>", method= ["GET"])
+@planets_bp.route("/<planet_id>", methods= ["GET"])
 def handle_planet(planet_id):
     planet = validate_planet(planet_id)
     return planet
