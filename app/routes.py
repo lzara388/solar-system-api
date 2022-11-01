@@ -1,5 +1,6 @@
 from crypt import methods
-from flask import Blueprint, jsonify, abort, make_response
+from wsgiref.util import request_uri
+from flask import Blueprint, jsonify, abort, make_response, request
 
 class Planet:
     def __init__(self, id, name, description, from_sun):
@@ -48,6 +49,22 @@ def validate_planet(planet_id):
 def handle_planet(planet_id):
     planet = validate_planet(planet_id)
     return planet
+
+@planets_bp.route("", methods = ["POST"])
+def create_planet():
+    request_body = request.get_json()
+
+    new_planet = Planet(
+        id = request_body["id"],
+        name = request_body["name"], 
+        description= request_body["description"], 
+        from_sun= request_body["from_sun"]
+        )
+    
+    planets.append(new_planet)
+
+    return make_response(f"Planet {new_planet.name} was successfully created", 201)
+
 
 
 
