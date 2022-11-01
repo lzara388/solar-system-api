@@ -65,7 +65,27 @@ def create_planet():
 
     return make_response(f"Planet {new_planet.name} was successfully created", 201)
 
+#PUT
+@planets_bp.route("/<planet_id>", methods = ["PUT"])
+def update_planet(planet_id):
+    planet = validate_planet(planet_id)
 
+    request_body = request.get_json()
 
+    planet.name = request_body["name"]
+    planet.description = request_body["description"]
+    planet.from_sun = request_body["from_sun"]
 
+    return make_response(f"Planet {planet.id} was successfully updated", 200)
 
+#DELETE
+@planets_bp.route("/<planet_id>", methods = ["DELETE"])
+def delete_planet(planet_id):
+    planet = validate_planet(planet_id)
+
+    for planet in planets:
+        if planet["id"] == planet_id:
+            del planet
+            break
+
+    return make_response(f"Planet {planet.id} was successfully deleted", 200)
