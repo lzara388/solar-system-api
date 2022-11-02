@@ -2,19 +2,19 @@ from crypt import methods
 from wsgiref.util import request_uri
 from flask import Blueprint, jsonify, abort, make_response, request
 
-class Planet:
-    def __init__(self, id, name, description, from_sun):
-        self.id = id
-        self.name = name
-        self.description = description
-        self.from_sun = from_sun
+# class Planet:
+#     def __init__(self, id, name, description, from_sun):
+#         self.id = id
+#         self.name = name
+#         self.description = description
+#         self.from_sun = from_sun
     
 
-planets = [
-    Planet(1, "Mars", "Mars is the fourth planet from the Sun and the second-smallest planet in the Solar System", "141.6 million m"),
-    Planet(2, "Venus", "Venus is the second planet from the Sun.", "67.24 million m"), 
-    Planet(3, "Neptune", "eighth planet from the Sun and the farthest known solar planet", "2.793 billion mi") 
-    ]
+# planets = [
+#     Planet(1, "Mars", "Mars is the fourth planet from the Sun and the second-smallest planet in the Solar System", "141.6 million m"),
+#     Planet(2, "Venus", "Venus is the second planet from the Sun.", "67.24 million m"), 
+#     Planet(3, "Neptune", "eighth planet from the Sun and the farthest known solar planet", "2.793 billion mi") 
+#     ]
 
 planets_bp = Blueprint('planets_bp', __name__, url_prefix= "/planets")
 
@@ -65,13 +65,14 @@ def create_planet():
 
     return make_response(f"Planet {new_planet.name} was successfully created", 201)
 
-#PUT
+#PUT; currently not working - attribute, list has no attribute name
 @planets_bp.route("/<planet_id>", methods = ["PUT"])
 def update_planet(planet_id):
     planet = validate_planet(planet_id)
 
     request_body = request.get_json()
 
+    # I think here we have to find the planet by id and then manually update each entry
     planet.name = request_body["name"]
     planet.description = request_body["description"]
     planet.from_sun = request_body["from_sun"]
