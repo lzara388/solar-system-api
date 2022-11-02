@@ -76,7 +76,7 @@ def update_planet(planet_id):
     planet.description = request_body["description"]
     planet.from_sun = request_body["from_sun"]
 
-    return make_response(f"Planet {planet.id} was successfully updated", 200)
+    return make_response(f"Planet {planet.id} was successfully updated")
 
 #DELETE
 @planets_bp.route("/<planet_id>", methods = ["DELETE"])
