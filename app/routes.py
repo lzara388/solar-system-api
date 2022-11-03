@@ -55,13 +55,13 @@ def create_planet():
     new_planet = Planet(
                     name=request_body["name"],
                     description=request_body["description"],
-                    from_sunn = request_body["from_sun"]
+                    from_sun = request_body["from_sun"]
                     )
 
     db.session.add(new_planet)
     db.session.commit()
 
-    return make_response(f"Planet {new_planet.title} successfully created", 201)
+    return make_response(f"Planet {new_planet.name} successfully created", 201)
 
 
 @planets_bp.route("/<planet_id>", methods = ["PUT"])
