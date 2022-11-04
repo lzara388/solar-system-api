@@ -25,18 +25,16 @@ def read_all_planets():
         )
     return jsonify(planets_response)
 
-def validate_planet(planet_id):
+def validate_model(cls, model_id):
     try:
-        planet_id = int(planet_id)
+        model_id = int(model_id)
     except:
-        abort(make_response({"message":f"planet {planet_id} invalid"}, 400))
+        abort(make_response({"message":f"{cls.__name__} {model_id} invalid"}, 400))
 
-    planet = Planet.query.get(planet_id)
+    model = cls.query.get(model_id)
 
-    if not planet:
-        abort(make_response({"message":f"planet {planet_id} not found"}, 404))
-
-    return planet
+    if not model:
+        abort(make_response({"message":f"{cls.__name__} {model_id} not found"}, 404))
     
 
 @planets_bp.route("/<planet_id>", methods= ["GET"])
