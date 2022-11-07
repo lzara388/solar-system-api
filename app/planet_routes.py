@@ -39,7 +39,7 @@ def validate_model(cls, model_id):
 
 @planets_bp.route("/<planet_id>", methods= ["GET"])
 def read_one_planet(planet_id):
-    planet = validate_planet(planet_id)
+    planet = validate_model(planet_id)
     return {
             "id": planet.id,
             "name": planet.name,
@@ -65,7 +65,7 @@ def create_planet():
 
 @planets_bp.route("/<planet_id>", methods = ["PUT"])
 def update_planet(planet_id):
-    planet = validate_planet(planet_id)
+    planet = validate_model(planet_id)
 
     request_body = request.get_json()
 
@@ -80,7 +80,7 @@ def update_planet(planet_id):
 #DELETE
 @planets_bp.route("/<planet_id>", methods = ["DELETE"])
 def delete_planet(planet_id):
-    planet = validate_planet(planet_id)
+    planet = validate_model(planet_id)
 
     db.session.delete(planet)
     db.session.commit()
