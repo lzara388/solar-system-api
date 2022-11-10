@@ -5,17 +5,22 @@ class Planet(db.Model):
     name = db.Column(db.String)
     description = db.Column(db.String)
     from_sun = db.Column(db.String)
-    moon_id = db.Column(db.Integer, db.ForeignKey('moon.id'))
-    moon = db.relationship("Moon", back_populates="planets")
+    moons = db.relationship("Moon", back_populates="planet")
 
+    # def to_dict(self):
+        # planet_as_dict = {}
+        # planet_as_dict["id"] = self.id
+        # planet_as_dict["name"] = self.name
+        # planet_as_dict["description"] = self.description
+        # planet_as_dict["from_sun"] = self.from_sun
     def to_dict(self):
-        planet_as_dict = {}
-        planet_as_dict["id"] = self.id
-        planet_as_dict["name"] = self.name
-        planet_as_dict["description"] = self.description
-        planet_as_dict["from_sun"] = self.from_sun
-
-        return planet_as_dict
+        planet_dict = {
+        "id": self.id,
+        "name": self.name,
+        "description": self.description,
+        "from_sun": self.from_sun
+    }
+        return planet_dict
 
     @classmethod
     def from_dict(cls, planet_data):
